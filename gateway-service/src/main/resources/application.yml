@@ -1,0 +1,66 @@
+spring:
+  application:
+    name: gateway-service
+
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: user-service
+              uri: lb://USER-SERVICE
+              predicates:
+                - Path=/api/v1/usuarios/**
+
+            - id: game-service
+              uri: lb://GAME-SERVICE
+              predicates:
+                - Path=/api/v1/juegos/**
+
+            - id: team-service
+              uri: lb://TEAM-SERVICE
+              predicates:
+                - Path=/api/v1/equipos/**
+
+            - id: tournament-service
+              uri: lb://TOURNAMENT-SERVICE
+              predicates:
+                - Path=/api/v1/torneos/**
+
+            - id: match-service
+              uri: lb://MATCH-SERVICE
+              predicates:
+                - Path=/api/v1/partidas/**
+
+            - id: registration-service
+              uri: lb://REGISTRATION-SERVICE
+              predicates:
+                - Path=/api/v1/inscripciones/**
+
+            - id: result-service
+              uri: lb://RESULT-SERVICE
+              predicates:
+                - Path=/api/v1/resultados/**
+
+            - id: ranking-service
+              uri: lb://RANKING-SERVICE
+              predicates:
+                - Path=/api/v1/rankings/**
+
+            - id: notification-service
+              uri: lb://NOTIFICATION-SERVICE
+              predicates:
+                - Path=/api/v1/notificaciones/**
+
+            - id: sanction-service
+              uri: lb://SANCTION-SERVICE
+              predicates:
+                - Path=/api/v1/sanciones/**
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

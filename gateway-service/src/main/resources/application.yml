@@ -7,55 +7,56 @@ spring:
       server:
         webmvc:
           routes:
+
             - id: user-service
               uri: lb://USER-SERVICE
               predicates:
-                - Path=/api/v1/usuarios/**,/api/v1/auth/**
+                - Path=/api/v1/usuarios/**,/api/v2/usuarios/**,/api/v1/auth/**
 
             - id: game-service
               uri: lb://GAME-SERVICE
               predicates:
-                - Path=/api/v1/juegos/**
+                - Path=/api/v1/juegos/**,/api/v2/juegos/**
 
             - id: team-service
               uri: lb://TEAM-SERVICE
               predicates:
-                - Path=/api/v1/equipos/**
+                - Path=/api/v1/equipos/**,/api/v2/equipos/**
 
             - id: tournament-service
               uri: lb://TOURNAMENT-SERVICE
               predicates:
-                - Path=/api/v1/torneos/**
+                - Path=/api/v1/torneos/**,/api/v2/torneos/**
 
             - id: match-service
               uri: lb://MATCH-SERVICE
               predicates:
-                - Path=/api/v1/partidas/**
+                - Path=/api/v1/partidas/**,/api/v2/partidas/**
 
             - id: registration-service
               uri: lb://REGISTRATION-SERVICE
               predicates:
-                - Path=/api/v1/inscripciones/**
+                - Path=/api/v1/inscripciones/**,/api/v2/inscripciones/**
 
             - id: result-service
               uri: lb://RESULT-SERVICE
               predicates:
-                - Path=/api/v1/resultados/**
+                - Path=/api/v1/resultados/**,/api/v2/resultados/**
 
             - id: ranking-service
               uri: lb://RANKING-SERVICE
               predicates:
-                - Path=/api/v1/rankings/**
+                - Path=/api/v1/rankings/**,/api/v2/rankings/**
 
             - id: notification-service
               uri: lb://NOTIFICATION-SERVICE
               predicates:
-                - Path=/api/v1/notificaciones/**
+                - Path=/api/v1/notificaciones/**,/api/v2/notificaciones/**
 
             - id: sanction-service
               uri: lb://SANCTION-SERVICE
               predicates:
-                - Path=/api/v1/sanciones/**
+                - Path=/api/v1/sanciones/**,/api/v2/sanciones/**
 
 server:
   port: 8080

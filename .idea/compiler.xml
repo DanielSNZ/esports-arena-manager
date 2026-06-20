@@ -9,7 +9,7 @@
         <module name="eureka-service" />
         <module name="gateway-service" />
       </profile>
-      <profile name="Annotation profile for team-service" enabled="true">
+      <profile name="Annotation profile for sanction-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -18,12 +18,12 @@
         </processorPath>
         <module name="game-service" />
         <module name="ranking-service" />
-        <module name="registration-service" />
         <module name="sanction-service" />
-        <module name="tournament-service" />
+        <module name="registration-service" />
         <module name="result-service" />
-        <module name="user-service" />
+        <module name="tournament-service" />
         <module name="match-service" />
+        <module name="user-service" />
         <module name="team-service" />
         <module name="notification-service" />
       </profile>

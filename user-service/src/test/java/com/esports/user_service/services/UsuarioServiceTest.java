@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,9 @@ public class UsuarioServiceTest {
     @Mock
     private UsuarioRepository usuarioRepository;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
     @InjectMocks
     private UsuarioServiceImpl usuarioService;
 
@@ -41,6 +45,7 @@ public class UsuarioServiceTest {
         usuarioPrueba.setNombre("Daniel");
         usuarioPrueba.setNickname("danielsaa");
         usuarioPrueba.setEmail("daniel@gmail.com");
+        usuarioPrueba.setPassword("password-encriptada");
         usuarioPrueba.setRol("JUGADOR");
         usuarioPrueba.setEstado("ACTIVO");
         usuarioPrueba.setFechaRegistro("2026-06-19");
@@ -49,6 +54,7 @@ public class UsuarioServiceTest {
         usuarioDTO.setNombre("Daniel");
         usuarioDTO.setNickname("danielsaa");
         usuarioDTO.setEmail("daniel@gmail.com");
+        usuarioDTO.setPassword("123456");
         usuarioDTO.setRol("JUGADOR");
         usuarioDTO.setEstado("ACTIVO");
         usuarioDTO.setFechaRegistro("2026-06-19");
@@ -63,6 +69,7 @@ public class UsuarioServiceTest {
             usuario.setNombre(faker.name().fullName());
             usuario.setNickname(faker.name().username());
             usuario.setEmail(faker.internet().emailAddress());
+            usuario.setPassword("password-encriptada");
             usuario.setRol("JUGADOR");
             usuario.setEstado("ACTIVO");
             usuario.setFechaRegistro("2026-06-19");
@@ -143,6 +150,7 @@ public class UsuarioServiceTest {
     public void shouldSaveUsuario() {
         when(usuarioRepository.findByEmail(usuarioDTO.getEmail())).thenReturn(Optional.empty());
         when(usuarioRepository.findByNickname(usuarioDTO.getNickname())).thenReturn(Optional.empty());
+        when(passwordEncoder.encode(usuarioDTO.getPassword())).thenReturn("password-encriptada");
         when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuarioPrueba);
 
         Usuario result = usuarioService.save(usuarioDTO);
@@ -153,6 +161,7 @@ public class UsuarioServiceTest {
 
         verify(usuarioRepository, times(1)).findByEmail(usuarioDTO.getEmail());
         verify(usuarioRepository, times(1)).findByNickname(usuarioDTO.getNickname());
+        verify(passwordEncoder, times(1)).encode(usuarioDTO.getPassword());
         verify(usuarioRepository, times(1)).save(any(Usuario.class));
     }
 
@@ -193,11 +202,13 @@ public class UsuarioServiceTest {
         cambios.setNombre("Daniel Actualizado");
         cambios.setNickname("danielpro");
         cambios.setEmail("danielpro@gmail.com");
+        cambios.setPassword("654321");
         cambios.setRol("ADMIN");
         cambios.setEstado("ACTIVO");
         cambios.setFechaRegistro("2026-06-20");
 
         when(usuarioRepository.findById(id)).thenReturn(Optional.of(usuarioPrueba));
+        when(passwordEncoder.encode(cambios.getPassword())).thenReturn("password-encriptada-nueva");
         when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         Usuario result = usuarioService.updateById(id, cambios);
@@ -205,9 +216,11 @@ public class UsuarioServiceTest {
         assertThat(result.getNombre()).isEqualTo("Daniel Actualizado");
         assertThat(result.getNickname()).isEqualTo("danielpro");
         assertThat(result.getEmail()).isEqualTo("danielpro@gmail.com");
+        assertThat(result.getPassword()).isEqualTo("password-encriptada-nueva");
         assertThat(result.getRol()).isEqualTo("ADMIN");
 
         verify(usuarioRepository, times(1)).findById(id);
+        verify(passwordEncoder, times(1)).encode(cambios.getPassword());
         verify(usuarioRepository, times(1)).save(usuarioPrueba);
     }
 

@@ -4,16 +4,21 @@ import com.esports.user_service.exceptions.UsuarioException;
 import com.esports.user_service.models.Usuario;
 import com.esports.user_service.models.dtos.UsuarioDTO;
 import com.esports.user_service.repositories.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UsuarioServiceImpl(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public List<Usuario> findAll() {
@@ -57,6 +62,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setNombre(usuarioDTO.getNombre());
         usuario.setNickname(usuarioDTO.getNickname());
         usuario.setEmail(usuarioDTO.getEmail());
+        usuario.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
         usuario.setRol(usuarioDTO.getRol());
         usuario.setEstado(usuarioDTO.getEstado());
         usuario.setFechaRegistro(usuarioDTO.getFechaRegistro());
@@ -72,6 +78,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             usuario.setNombre(usuarioDTO.getNombre());
             usuario.setNickname(usuarioDTO.getNickname());
             usuario.setEmail(usuarioDTO.getEmail());
+            usuario.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
             usuario.setRol(usuarioDTO.getRol());
             usuario.setEstado(usuarioDTO.getEstado());
             usuario.setFechaRegistro(usuarioDTO.getFechaRegistro());

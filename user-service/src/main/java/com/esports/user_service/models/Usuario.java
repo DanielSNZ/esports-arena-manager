@@ -32,6 +32,10 @@ public class Usuario {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @NotBlank(message = "La contraseña no puede estar vacía")
+    @Column(nullable = false)
+    private String password;
+
     @NotBlank(message = "El rol no puede estar vacío")
     @Column(nullable = false)
     private String rol;

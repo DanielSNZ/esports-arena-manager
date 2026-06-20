@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class UsuarioDTO {
+public class RegisterRequest {
 
     @NotBlank(message = "El nombre no puede estar vacío")
     private String nombre;

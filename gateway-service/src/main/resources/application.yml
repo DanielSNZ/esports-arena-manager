@@ -8,10 +8,15 @@ spring:
         webmvc:
           routes:
 
+            - id: auth-service
+              uri: lb://USER-SERVICE
+              predicates:
+                - Path=/api/v1/auth/**
+
             - id: user-service
               uri: lb://USER-SERVICE
               predicates:
-                - Path=/api/v1/usuarios/**,/api/v2/usuarios/**,/api/v1/auth/**
+                - Path=/api/v1/usuarios/**,/api/v2/usuarios/**
 
             - id: game-service
               uri: lb://GAME-SERVICE
